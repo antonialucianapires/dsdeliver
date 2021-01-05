@@ -2,7 +2,6 @@ package com.alps.dsdeliver.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "tb_product")
@@ -19,6 +18,7 @@ public class Product implements Serializable {
     private String imageUri;
 
     public Product() {
+
     }
 
     public Product(Long id, String name, Double price, String description, String imageUri) {
@@ -71,15 +71,24 @@ public class Product implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(description, product.description) && Objects.equals(imageUri, product.imageUri);
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, name, price, description, imageUri);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Product other = (Product) obj;
+        if (id == null) {
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 }
